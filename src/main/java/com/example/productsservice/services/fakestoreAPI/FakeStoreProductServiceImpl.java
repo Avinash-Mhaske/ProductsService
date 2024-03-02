@@ -1,11 +1,13 @@
-package com.example.productsservice.services;
+package com.example.productsservice.services.fakestoreAPI;
 
 import com.example.productsservice.dtos.FakeStoreProductDto;
 import com.example.productsservice.exceptions.InvalidInputException;
 import com.example.productsservice.exceptions.ProductNotExistsException;
 import com.example.productsservice.models.Category;
 import com.example.productsservice.models.Product;
+import com.example.productsservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -15,20 +17,22 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service  // @Service annotation is used to mark the class as a service provider.
-public class FakeStoreProductService implements ProductService {
+@Primary // @Primary annotation is used to give higher preference to a bean when there are multiple beans of the same type.
+@Service("fakeStoreProductService") // @Service annotation is used to mark the class as a service provider.
+public class FakeStoreProductServiceImpl implements ProductService {
     private RestTemplate restTemplate;
-    FakeStoreProductDto fakeStoreProductDto;
-
+    FakeStoreProductDto fakeStoreProductDto; //this is called declaring object of a class
+//    Product product;
     @Autowired  //This annotation is used to inject the dependency automatically.
-    public FakeStoreProductService(RestTemplate restTemplate) {
+    public FakeStoreProductServiceImpl(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 // To use a bean in a class, we have to create a constructor of that class,
 // and pass the bean as a parameter to the constructor. Then annotate it with @Autowired.
-
+   
     private Product convertFakeStoreToProduct(FakeStoreProductDto fakeStoreProductDto){
         Product product=new Product();
+//        product=new Product();
         product.setId(fakeStoreProductDto.getId());
         product.setTitle(fakeStoreProductDto.getTitle());
         product.setPrice(fakeStoreProductDto.getPrice());
@@ -44,8 +48,8 @@ public class FakeStoreProductService implements ProductService {
         // Below getForObject() method takes two parameters.
         // The first parameter is the URL of the API.
         // The second parameter is the class that we want to map the response to.
-        // Here will say hey restTemplate please make a get call to this URL and the data that you get back
-        // has a one on one mapping to this class
+        // Here we will say hey restTemplate please make a get call to this URL and the data that you get back
+        // has a one on one mapping to this class.
         if (id == null) {
             throw new InvalidInputException("Product id cannot be null");
         }
@@ -54,12 +58,14 @@ public class FakeStoreProductService implements ProductService {
             throw new ProductNotExistsException("Product with id "+id+" does not exist");
         }
         return convertFakeStoreToProduct(productDto);
+
     }
 
+
     @Override
-    public String deleteProduct(Long id) {
+    public void deleteProduct(Long id) {
         restTemplate.delete("https://fakestoreapi.com/products/"+id);
-        return "The product with id "+id+" is deleted.";
+//        return "The product with id "+id+" is deleted.";
     }
 
     @Override
@@ -114,6 +120,9 @@ public class FakeStoreProductService implements ProductService {
         return convertFakeStoreToProduct(response);
     }
 }
+
+
+
 
 
 //    @Override

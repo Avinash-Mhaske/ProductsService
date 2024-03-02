@@ -2,6 +2,7 @@ package com.example.productsservice.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 //A DTO (data transfer Object) is a data type that you send outside(i.e 3rd party API)
 // or receive from outside your application.

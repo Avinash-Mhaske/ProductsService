@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration  // @Configuration annotation is used to mark the class as a configuration class.
+                // This class will be used to configure the beans that we want to use in our application.
 public class ApplicationConfiguration {
 
     @Bean // This annotation will create an object of RestTemplate and add it to the Spring container.

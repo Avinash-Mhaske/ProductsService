@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 
@@ -30,5 +31,11 @@ public class ExceptionHandlers {
             return new ResponseEntity<>(exceptionsDto, HttpStatus.BAD_GATEWAY);
     }
 
-
+    @ExceptionHandler(NoResourceFoundException.class)
+        public ResponseEntity<ExceptionsDto> handleNoResourceFound(NoResourceFoundException noResourceFoundException){
+            ExceptionsDto exceptionsDto = new ExceptionsDto();
+            exceptionsDto.setMessage(noResourceFoundException.getMessage());
+            exceptionsDto.setDetails("Please try again later.");
+            return new ResponseEntity<>(exceptionsDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

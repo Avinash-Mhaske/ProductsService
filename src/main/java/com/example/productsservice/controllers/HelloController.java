@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/hello")  
 public class HelloController {
 
-//    @GetMapping("/say/{name}/{surname}")
-//    public String sayHello(@PathVariable String name, @PathVariable String surname){
-//        return "Hello! "+name+" "+surname;
-//    }
+    @GetMapping("/say/{name}/{surname}")
+    public String sayHello(@PathVariable String name, @PathVariable String surname){
+        return "Hello! "+name+" "+surname;
+    }
 }
