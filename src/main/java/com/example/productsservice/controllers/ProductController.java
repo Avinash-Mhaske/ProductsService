@@ -21,7 +21,7 @@ public class ProductController {
     private final ProductService productService;
 
     @Autowired // This annotation is used to tell Spring to inject an instance of ProductService into this class.
-    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService) {
         this.productService = productService;
     }
 
