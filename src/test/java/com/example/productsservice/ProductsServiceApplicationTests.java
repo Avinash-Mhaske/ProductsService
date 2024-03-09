@@ -14,7 +14,7 @@ class ProductsServiceApplicationTests {
     void contextLoads() {
     }
     @Test
-    @Transactional
+    @Transactional // This will rollback the transaction after the test
     @Commit
     void testQuery() {
 //        Product product = new Product();
